@@ -1,0 +1,80 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report a Problem</title>
+  <link rel="stylesheet" href="../css/report.css">
+
+</head>
+<body>
+  <div class="form-container">
+    <h2>Report a Local Problem</h2>
+    <form action="#" method="POST">
+      <label for="title">Problem Title:</label>
+      <input type="text" id="title" name="title" required>
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+
+      <label for="category">Category:</label>
+      <select id="category" name="category" required>
+        <option value="road">Road Issue</option>
+        <option value="electric">Electric Pole</option>
+        <option value="garbage">Garbage</option>
+        <option value="water">Water Leak</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" placeholder="e.g., Street Name or Area">
+
+      <label for="image">Upload Photo:</label>
+      <input type="file" id="image" name="image">
+
+      <button type="submit">Submit Report</button>
+    </form>
+      
+  </div>
+<script>
+document.getElementById("save-problem").addEventListener("click", function () {
+    // Collect values from the form fields
+    const title = document.getElementById("problem-title").value.trim();
+    const location = document.getElementById("problem-location").value.trim();
+    const category = document.getElementById("problem-category").value;
+    const description = document.getElementById("problem-description").value.trim();
+
+    // Check all fields are filled
+    if (!title || !location || !category || !description) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    // Get existing problems array from localStorage or empty array if none
+    let problems = JSON.parse(localStorage.getItem("problems")) || [];
+
+    // Create a new problem object
+    let newProblem = {
+        id: Date.now(),
+        title,
+        location,
+        category,
+        description,
+        status: "unresolved",
+        time: new Date().toISOString()
+    };
+
+    // Add the new problem to the array
+    problems.push(newProblem);
+
+    // Save the updated problems array back to localStorage
+    localStorage.setItem("problems", JSON.stringify(problems));
+
+    // Redirect user back to main page (change 'index.html' if your main page filename is different)
+    window.location.href = "index.html";
+});
+
+</script>
+</body>
+</html> 
+
